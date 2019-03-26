@@ -2,23 +2,23 @@ version: "2.2"
 
 services:
   web:
-    image: nginx:alpine
-    ports:
+    image: nginx:alpine # Official image docker-compose automatic pull creation 官方镜像,         docker-compose自动拉取创建
+    ports: # The left port is exposed to the outside, and the right port is the port inside the container. 左边端口对外暴露,右边端口为容器内端口
       - "80:80"
-    volumes:
-      - "./data/webapp:/data/webapp"
-      - "./data/weblogs:/weblogs"
+    volumes: # Directory mount 目录挂载
+      - "./data/webapp:/data/webapp" # Use /host_mnt/f under windows to represent windows F:/ 在windows下使用/host_mnt/f 代表windows F:/
+      - "./data/weblogs:/weblogs" # 
       - "./nginx/conf.d:/etc/nginx/conf.d"
     networks:
       - docker-network
-    depends_on:
+    depends_on: # Startup order after php 在下面php容器启动后启动
       - php
 
 
   # 新框架的php配置
   php:
-    image: php7.2
-    volumes:
+    image: php7.2 # The {imageName} created in the first step
+    volumes: # Directory mount 目录挂载
       - "./data/webapp:/data/webapp"
       - "./data/weblogs:/weblogs"
       - "./php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini"
@@ -27,4 +27,4 @@ services:
 
 networks:
     docker-network:
-        driver: bridge
+        driver: bridge # Bridge mode nginx can be used to represent php services IP address in nginx configuration 桥接模式 在nginx的配置中就能使用 php 来代表php的IP地址
