@@ -28,81 +28,93 @@ services:
       - docker-network
 
 
-  rabbitmq:
-    image: rabbitmq
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASSWORD: guest
-      RABBITMQ_DEFAULT_VHOST: /
-      RABBITMQ_SSL_CACERTFILE: /rootCA.pem
-      RABBITMQ_SSL_CERTFILE: /rootCA.pem
-      RABBITMQ_SSL_KEYFILE: /rootCA.key
-      RABBITMQ_SSL_VERIFY: verify_none
-      RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT: "false"
-    volumes:
-      - "./tests/files/rootCA.pem:/rootCA.pem:ro"
-      - "./tests/files/rootCA.key:/rootCA.key:ro"
-    ports:
-      - 5671:5671
-      - 5672:5672
+  # rabbitmq:
+  #   image: rabbitmq
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: guest
+  #     RABBITMQ_DEFAULT_PASSWORD: guest
+  #     RABBITMQ_DEFAULT_VHOST: /
+  #     RABBITMQ_SSL_CACERTFILE: /rootCA.pem
+  #     RABBITMQ_SSL_CERTFILE: /rootCA.pem
+  #     RABBITMQ_SSL_KEYFILE: /rootCA.key
+  #     RABBITMQ_SSL_VERIFY: verify_none
+  #     RABBITMQ_SSL_FAIL_IF_NO_PEER_CERT: "false"
+  #   volumes:
+  #     - "./tests/files/rootCA.pem:/rootCA.pem:ro"
+  #     - "./tests/files/rootCA.key:/rootCA.key:ro"
+  #   ports:
+  #     - 5671:5671
+  #     - 5672:5672
 
-  #添加elk
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
-    container_name: elasticsearch
-    hostname: elasticsearch
-    environment:
-      - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    mem_limit: 1g
-    cap_add:
-      - IPC_LOCK
+  # #添加elk
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+  #   container_name: elasticsearch
+  #   hostname: elasticsearch
+  #   environment:
+  #     - cluster.name=docker-cluster
+  #     - bootstrap.memory_lock=true
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #     nofile:
+  #       soft: 65536
+  #       hard: 65536
+  #   mem_limit: 1g
+  #   cap_add:
+  #     - IPC_LOCK
+  #   ports: 
+  #     - "9200:9200"
+  #   volumes: # Directory mount 目录挂载
+  #     - "./data/esdata1:/usr/share/elasticsearch/data"
+  #   networks:
+  #     - docker-network
+
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:5.5.1
+  #   container_name: kibana551
+  #   hostname: kibana
+  #   environment:
+  #     - ELASTICSEARCH_URL=http://elasticsearch:9200
+  #   depends_on:
+  #     - elasticsearch
+  #   restart: always
+  #   ports:
+  #     - "5601:5601"
+  #   networks:
+  #     - docker-network
+
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:5.5.1
+  #   container_name: logstash551
+  #   hostname: logstash
+  #   command: logstash -f /etc/logstash/conf.d/logstash.conf
+  #   volumes:
+  #     - $PWD/logstash/conf.d:/etc/logstash/conf.d
+  #     - "/host_mnt/f/work/storage/logs:/tmp"
+  #   restart: always
+  #   depends_on:
+  #     - elasticsearch
+  #   ports:
+  #     - "7001-7005:7001-7005"
+  #     - "4567:4567"
+  #   networks:
+  #     - docker-network
+
+  redis:
+    image: redis:alpine
+    container_name: redis // php 调用的时候直接使用radis 127.0.0.1 在docker中无法通过
     ports: 
-      - "9200:9200"
+      - "6379:6379"
+    restart: always
     volumes: # Directory mount 目录挂载
-      - "./data/esdata1:/usr/share/elasticsearch/data"
+      - "./data:/data"
+      - "./redis:/etc/redis"
+    # command: redis-server --requirepass ${pwd} --notify-keyspace-events Eglx
     networks:
       - docker-network
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:5.5.1
-    container_name: kibana551
-    hostname: kibana
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-    depends_on:
-      - elasticsearch
-    restart: always
-    ports:
-      - "5601:5601"
-    networks:
-      - docker-network
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:5.5.1
-    container_name: logstash551
-    hostname: logstash
-    command: logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - $PWD/logstash/conf.d:/etc/logstash/conf.d
-      - "/host_mnt/f/work/storage/logs:/tmp"
-    restart: always
-    depends_on:
-      - elasticsearch
-    ports:
-      - "7001-7005:7001-7005"
-      - "4567:4567"
-    networks:
-      - docker-network
-
 
 
 networks:
