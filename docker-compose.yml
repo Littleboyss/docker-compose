@@ -7,7 +7,7 @@ services:
     ports: # The left port is exposed to the outside, and the right port is the port inside the container. 左边端口对外暴露,右边端口为容器内端口
       - "80:80"
     volumes: # Directory mount 目录挂载
-      - "/host_mnt/f/work/:/data/webapp" # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
+      - "/Users/leaves/Public:/data/webapp" # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
       - "./data/weblogs:/weblogs/nginx"
       - "./nginx/conf.d:/etc/nginx/conf.d"
     networks:
@@ -21,7 +21,7 @@ services:
     image: php7.2 # The {imageName} created in the first step
     container_name: php
     volumes: # Directory mount 目录挂载
-      - "/host_mnt/f/work/:/data/webapp"
+      - "/Users/leaves/Public:/data/webapp"
       - "./data/weblogs:/weblogs"
       - "./php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini"
     networks:
