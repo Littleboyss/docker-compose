@@ -118,14 +118,13 @@ services:
 
   mysql:
     image: mysql
-    container_name: mysql   # php 调用的时候直接使用radis 127.0.0.1 在docker中无法通过
+    container_name: mysql   
     ports: 
       - "3306:3306"
     restart: always
     volumes: # Directory mount 目录挂载
-      - ./mysql:/etc/mysql/conf.d/mysql.cnf:ro
-      - ./mysql:/var/lib/mysql/:rw
-    # command: redis-server --requirepass ${pwd} --notify-keyspace-events Eglx
+      - ./mysql/data:/var/lib/mysql # mysql 数据文件
+      - ./mysql/config/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
     networks:
       - docker-network
     environment:
