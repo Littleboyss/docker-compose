@@ -1,3 +1,7 @@
 data/esdata1/:
 data/weblogs/:
-mysql/:
+
+mysql/data
+.DS_Store
+*/.DS_Store
+*.log
