@@ -17,15 +17,15 @@ services:
 
 
   # 新框架的php配置
-  php:
-    image: php7.2 # The {imageName} created in the first step
-    container_name: php
-    volumes: # Directory mount 目录挂载
-      - /Users/leaves/Public:/data/webapp
-      - ./data/weblogs:/weblogs
-      - ./php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
-    networks:
-      - docker-network
+  # php:
+  #   image: php7.2 # The {imageName} created in the first step
+  #   container_name: php
+  #   volumes: # Directory mount 目录挂载
+  #     - /Users/leaves/Public:/data/webapp
+  #     - ./data/weblogs:/weblogs
+  #     - ./php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+  #   networks:
+  #     - docker-network
 
 
   # rabbitmq:
