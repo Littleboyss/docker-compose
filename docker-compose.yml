@@ -1,19 +1,19 @@
 version: '3.7'
 
 services:
-  web:
-    image: nginx:alpine # Official image docker-compose automatic pull creation 官方镜像,         docker-compose自动拉取创建
-    container_name: nginx
-    ports: # The left port is exposed to the outside, and the right port is the port inside the container. 左边端口对外暴露,右边端口为容器内端口
-      - "80:80"
-    volumes: # Directory mount 目录挂载
-      - /Users/leaves/Public:/data/webapp # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
-      - ./data/weblogs:/weblogs/nginx
-      - ./nginx/conf.d:/etc/nginx/conf.d
-    networks:
-      - docker-network
-    depends_on: # Startup order after php 在下面php容器启动后启动
-      - php
+  # web:
+  #   image: nginx:alpine # Official image docker-compose automatic pull creation 官方镜像,         docker-compose自动拉取创建
+  #   container_name: nginx
+  #   ports: # The left port is exposed to the outside, and the right port is the port inside the container. 左边端口对外暴露,右边端口为容器内端口
+  #     - "80:80"
+  #   volumes: # Directory mount 目录挂载
+  #     - /Users/leaves/Public:/data/webapp # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
+  #     - ./data/weblogs:/weblogs/nginx
+  #     - ./nginx/conf.d:/etc/nginx/conf.d
+  #   networks:
+  #     - docker-network
+  #   depends_on: # Startup order after php 在下面php容器启动后启动
+  #     - php
 
 
   # 新框架的php配置
