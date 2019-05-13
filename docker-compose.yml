@@ -116,19 +116,19 @@ services:
   #  networks:
  #     - docker-network
 
-  mysql:
-    image: mysql
-    container_name: mysql   
-    ports: 
-      - "3306:3306"
-    restart: always
-    volumes: # Directory mount 目录挂载
-      - ./mysql/data:/var/lib/mysql # mysql 数据文件
-      - ./mysql/config/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-    networks:
-      - docker-network
-    environment:
-      MYSQL_ROOT_PASSWORD: "chengye"
+  # mysql:
+  #   image: mysql
+  #   container_name: mysql   
+  #   ports: 
+  #     - "3306:3306"
+  #   restart: always
+  #   volumes: # Directory mount 目录挂载
+  #     - ./mysql/data:/var/lib/mysql # mysql 数据文件
+  #     - ./mysql/config/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+  #   networks:
+  #     - docker-network
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: "chengye"
 
 
 networks:
