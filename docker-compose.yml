@@ -19,6 +19,21 @@ services:
   # 新框架的php配置
   php:
     image: php7.2 # The {imageName} created in the first step
+    # 官方版本默认安装扩展: 
+    # Core, ctype, curl
+    # date, dom
+    # fileinfo, filter, ftp
+    # hash
+    # iconv
+    # json
+    # libxml
+    # mbstring, mysqlnd
+    # openssl
+    # pcre, PDO, pdo_sqlite, Phar, posix
+    # readline, Reflection, session, SimpleXML, sodium, SPL, sqlite3, standard
+    # tokenizer
+    # xml, xmlreader, xmlwriter
+    # zlib
     container_name: php
     volumes: # Directory mount 目录挂载
       - /Users/leaves/Public:/data/webapp
