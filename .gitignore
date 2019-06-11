@@ -5,3 +5,5 @@ mysql/data
 mongo/data
 .DS_Store
 */.DS_Store
+*.log
+*/*.log
