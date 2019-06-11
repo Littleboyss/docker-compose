@@ -7,9 +7,9 @@ services:
     ports: # The left port is exposed to the outside, and the right port is the port inside the container. 左边端口对外暴露,右边端口为容器内端口
       - "80:80"
     volumes: # Directory mount 目录挂载
-      - "/host_mnt/f/work/:/data/webapp" # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
-      - "./data/weblogs:/weblogs/nginx"
-      - "./nginx/conf.d:/etc/nginx/conf.d"
+      - /Users/leaves/Public:/data/webapp # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
+      - ./data/weblogs:/weblogs/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
     networks:
       - docker-network
     depends_on: # Startup order after php 在下面php容器启动后启动
@@ -19,11 +19,26 @@ services:
   # 新框架的php配置
   php:
     image: php7.2 # The {imageName} created in the first step
+    # 官方版本默认安装扩展: 
+    # Core, ctype, curl
+    # date, dom
+    # fileinfo, filter, ftp
+    # hash
+    # iconv
+    # json
+    # libxml
+    # mbstring, mysqlnd
+    # openssl
+    # pcre, PDO, pdo_sqlite, Phar, posix
+    # readline, Reflection, session, SimpleXML, sodium, SPL, sqlite3, standard
+    # tokenizer
+    # xml, xmlreader, xmlwriter
+    # zlib
     container_name: php
     volumes: # Directory mount 目录挂载
-      - "/host_mnt/f/work/:/data/webapp"
-      - "./data/weblogs:/weblogs"
-      - "./php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini"
+      - /Users/leaves/Public:/data/webapp
+      - ./data/weblogs:/weblogs
+      - ./php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
     networks:
       - docker-network
 
@@ -68,7 +83,7 @@ services:
   #   ports: 
   #     - "9200:9200"
   #   volumes: # Directory mount 目录挂载
-  #     - "./data/esdata1:/usr/share/elasticsearch/data"
+  #     - ./data/esdata1:/usr/share/elasticsearch/data
   #   networks:
   #     - docker-network
 
@@ -93,7 +108,7 @@ services:
   #   command: logstash -f /etc/logstash/conf.d/logstash.conf
   #   volumes:
   #     - $PWD/logstash/conf.d:/etc/logstash/conf.d
-  #     - "/host_mnt/f/work/storage/logs:/tmp"
+  #     - /host_mnt/f/work/storage/logs:/tmp
   #   restart: always
   #   depends_on:
   #     - elasticsearch
@@ -110,11 +125,38 @@ services:
       - "6379:6379"
     restart: always
     volumes: # Directory mount 目录挂载
-      - "./data:/data"
-      - "./redis:/etc/redis"
+      - ./data:/data
+      - ./redis:/etc/redis
     # command: redis-server --requirepass ${pwd} --notify-keyspace-events Eglx
     networks:
       - docker-network
+
+  mysql:
+    image: mysql
+    container_name: mysql   
+    ports: 
+      - "3306:3306"
+    restart: always
+    volumes: # Directory mount 目录挂载
+      - ./mysql/data:/var/lib/mysql # mysql 数据文件
+      - ./mysql/config/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+    networks:
+      - docker-network
+    environment:
+      MYSQL_ROOT_PASSWORD: "chengye"
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - ./mongo/data:/data/db
+      - ./mongo/log:/var/log/mongodb/mongod.log
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: chengye
 
 
 networks:
