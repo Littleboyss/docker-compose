@@ -157,6 +157,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: chengye
+    networks:
+      - docker-network
 
 
 networks:
