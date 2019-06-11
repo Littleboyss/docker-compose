@@ -145,6 +145,19 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "chengye"
 
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - ./mongo/data:/data/db
+      - ./mongo/log:/var/log/mongodb/mongod.log
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: chengye
+
 
 networks:
     docker-network:
