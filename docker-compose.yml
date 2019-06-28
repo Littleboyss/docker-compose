@@ -1,19 +1,20 @@
 version: '3.3'
 
 services:
-  # web:
-  #   image: nginx:alpine # Official image docker-compose automatic pull creation 官方镜像,         docker-compose自动拉取创建
-  #   container_name: nginx
-  #   ports: # The left port is exposed to the outside, and the right port is the port inside the container. 左边端口对外暴露,右边端口为容器内端口
-  #     - "80:80"
-  #   volumes: # Directory mount 目录挂载
-  #     - /Users/leaves/Public:/data/webapp # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
-  #     - ./data/weblogs:/weblogs/nginx
-  #     - ./nginx/conf.d:/etc/nginx/conf.d
-  #   networks:
-  #     - docker-network
-  #   depends_on: # Startup order after php 在下面php容器启动后启动
-  #     - php
+  web:
+    image: nginx:alpine # Official image docker-compose automatic pull creation 官方镜像,         docker-compose自动拉取创建
+    container_name: nginx
+    ports: # The left port is exposed to the outside, and the right port is the port inside the container. 左边端口对外暴露,右边端口为容器内端口
+      - "80:80"
+      - "443:443"
+    volumes: # Directory mount 目录挂载
+      - /data/webapp:/data/webapp # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
+      - ./data/weblogs:/weblogs/nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - docker-network
+    depends_on: # Startup order after php 在下面php容器启动后启动
+      - php
 
 
   # 新框架的php配置
@@ -24,6 +25,16 @@ services:
       - /data/webapp:/data/webapp
       - ./data/weblogs:/weblogs
       - ./php/conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+    networks:
+      - docker-network
+  
+  v2ray:
+    image: v2ray/official
+    container_name: v2ray
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./v2ray/config.json:/etc/v2ray/config.json
     networks:
       - docker-network
 
@@ -103,18 +114,18 @@ services:
   #   networks:
   #     - docker-network
 
-  redis:
-    image: redis:alpine
-    container_name: redis   # php 调用的时候直接使用radis 127.0.0.1 在docker中无法通过
-    ports: 
-      - "6379:6379"
-    restart: always
-    volumes: # Directory mount 目录挂载
-      - ./data:/data
-      - ./redis:/etc/redis
-     #command: redis-server --requirepass ${pwd} --notify-keyspace-events Eglx
-    networks:
-      - docker-network
+  #redis:
+  # image: redis:alpine
+  # container_name: redis   # php 调用的时候直接使用radis 127.0.0.1 在docker中无法通过
+  # ports: 
+  #  - "6379:6379"
+  # restart: always
+  # volumes: # Directory mount 目录挂载
+  #   - ./data:/data
+  #   - ./redis:/etc/redis
+  #  #command: redis-server --requirepass ${pwd} --notify-keyspace-events Eglx
+  # networks:
+  #   - docker-network
 
   #mysql:
     #image: mysql
