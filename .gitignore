@@ -7,3 +7,4 @@ mongo/data
 */.DS_Store
 *.log
 */*.log
+data/weblogs/local_access.log
