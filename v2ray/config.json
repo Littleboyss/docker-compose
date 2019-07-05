@@ -1,0 +1,31 @@
+{
+  "log": {
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [{
+    "port": 8089,    #上面保存到记事本的端口号
+    "listen":"127.0.0.1",
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "85b1c4eb-ce90-4d59-a283-6d8e38c7bbce", #上面保存到记事本的uuid
+          "alterId": 64
+        }
+      ]
+    },
+     "streamSettings": {
+      "network": "ws",
+      "wsSettings": {
+        "path": "/ssl/"  #这里要和nginx配置文件里的location指令里的path对应起来
+      }
+    }
+  }],
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {}
+  }
+    ]
+}
