@@ -2,6 +2,7 @@ data/esdata1/:
 data/weblogs/:
 
 mysql/data
+mongo/data
 .DS_Store
 */.DS_Store
 *.log
