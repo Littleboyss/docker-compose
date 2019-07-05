@@ -10,6 +10,7 @@ services:
       - /Users/leaves/Public:/data/webapp # /host_mnt/f stands for windows F:/ /host_mnt/f 代表windows F:/
       - ./data/weblogs:/weblogs/nginx
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./data/mysql/mysql_sock:/var/run/mysqld
     networks:
       - docker-network
     depends_on: # Startup order after php 在下面php容器启动后启动
@@ -132,7 +133,7 @@ services:
       - docker-network
 
   mysql:
-    image: mysql
+    image: mysql:5.7
     container_name: mysql   
     ports: 
       - "3306:3306"
@@ -144,6 +145,7 @@ services:
       - docker-network
     environment:
       MYSQL_ROOT_PASSWORD: "chengye"
+
 
   mongo:
     image: mongo
