@@ -103,21 +103,21 @@ services:
   #   networks:
   #     - docker-network
 
-  redis:
-  image: redis:alpine
-  container_name: redis   # php 调用的时候直接使用radis 127.0.0.1 在docker中无法通过
-  ports: 
-   - "6379:6379"
-  restart: always
-  volumes: # Directory mount 目录挂载
-    - ./data:/data
-    - ./redis:/etc/redis
-   #command: redis-server --requirepass ${pwd} --notify-keyspace-events Eglx
-  networks:
-    - docker-network
+  # redis:
+  #   image: redis:alpine
+  #   container_name: redis   # php 调用的时候直接使用radis 127.0.0.1 在docker中无法通过
+  #   ports: 
+  #   - "6379:6379"
+  #   restart: always
+  #   volumes: # Directory mount 目录挂载
+  #     - ./data:/data
+  #     - ./redis:/etc/redis
+  #   #command: redis-server --requirepass ${pwd} --notify-keyspace-events Eglx
+  #   networks:
+  #     - docker-network
 
   mysql:
-    image: mysql:5.7
+    image: mysql:5.5
     container_name: mysql   
     ports: 
      - "3306:3306"
