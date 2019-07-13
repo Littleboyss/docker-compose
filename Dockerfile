@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     && pecl install redis \
     && pecl install memcached \
     && pecl install mongodb \
-    && docker-php-ext-enable redis memcached mongodb \
+    && pecl install yaf \
+    && docker-php-ext-enable redis memcached mongodb yaf \
     #设置时区
     && ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone 
