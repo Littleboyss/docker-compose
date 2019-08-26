@@ -110,6 +110,7 @@ services:
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
       - $PWD/logstash/conf.d:/etc/logstash/conf.d
+      - ./data/weblogs:/weblogs
     restart: always
     depends_on:
       - elasticsearch
