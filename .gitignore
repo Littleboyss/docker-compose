@@ -9,3 +9,4 @@ mongo/data
 */*.log
 vendor/
 data/weblogs/local_access.log
+*.dii

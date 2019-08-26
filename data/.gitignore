@@ -1,3 +1,6 @@
 dump.rdb
 *.log
 */*.log
+
+data/esdata1/:
+data/weblogs/:
