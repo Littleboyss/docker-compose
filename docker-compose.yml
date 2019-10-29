@@ -63,62 +63,6 @@ services:
   #     - 5671:5671
   #     - 5672:5672
 
-  #添加elk
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
-    container_name: elasticsearch
-    hostname: elasticsearch
-    environment:
-      - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    # mem_limit: 1g
-    cap_add:
-      - IPC_LOCK
-    ports: 
-      - "9200:9200"
-    volumes: # Directory mount 目录挂载
-      - ./data/esdata1:/usr/share/elasticsearch/data
-    networks:
-      - docker-network
-
-  kibana:
-    image: docker.elastic.co/kibana/kibana:5.5.1
-    container_name: kibana551
-    hostname: kibana
-    environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
-    depends_on:
-      - elasticsearch
-    restart: always
-    ports:
-      - "5601:5601"
-    networks:
-      - docker-network
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:5.5.1
-    container_name: logstash551
-    hostname: logstash
-    command: logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - $PWD/logstash/conf.d:/etc/logstash/conf.d
-      - ./data/weblogs:/weblogs
-    restart: always
-    depends_on:
-      - elasticsearch
-    ports:
-      - "7001-7005:7001-7005"
-      - "4567:4567"
-    networks:
-      - docker-network
 
   redis:
     image: redis:alpine
@@ -148,20 +92,20 @@ services:
       MYSQL_ROOT_PASSWORD: "chengye"
 
 
-  mongo:
-    image: mongo
-    container_name: mongo
-    ports:
-      - "27017:27017"
-    restart: always
-    volumes:
-      - ./mongo/data:/data/db
-      - ./mongo/log:/var/log/mongodb/mongod.log
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: chengye
-    networks:
-      - docker-network
+  # mongo:
+  #   image: mongo
+  #   container_name: mongo
+  #   ports:
+  #     - "27017:27017"
+  #   restart: always
+  #   volumes:
+  #     - ./mongo/data:/data/db
+  #     - ./mongo/log:/var/log/mongodb/mongod.log
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: chengye
+  #   networks:
+  #     - docker-network
 
 
 networks:
