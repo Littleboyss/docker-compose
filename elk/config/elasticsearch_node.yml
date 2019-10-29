@@ -1,0 +1,10 @@
+cluster.name: "docker-cluster"
+node.name: node1
+node.master: false
+node.data: true
+network.host: 0.0.0.0
+http.port: 9201
+transport.tcp.port: 9301
+discovery.zen.ping.unicast.hosts: ["elasticsearch:9300" , "elasticsearch_node:9301" ]
+
+path.logs: /usr/share/elasticsearch/logs
