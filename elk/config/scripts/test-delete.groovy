@@ -1,0 +1,1 @@
+ctx.op = ctx._source.num == count ? 'delete':'none'
