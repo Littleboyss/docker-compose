@@ -9,5 +9,5 @@
 4. run 
 ```docker-compose up -d```
 If it fails, confirm port 80,  use ```docker-compose down ``` to close the service and restart docker. 
-- 如果失败,确认80端口, 使用上面指令关闭docker-compose服务,重启docker
-5. now you can put file in this project 
+-使用 ```docker-compose up -d``` 启动服务， 如果失败,确认80端口, 使用 ```docker-compose down ``` 指令关闭docker-compose服务 排查错误，确认无误后使用之前的指令启动服务。
+
