@@ -14,3 +14,4 @@ data/*.log
 data/esdata1/*
 data/esdata2/*
 data/weblogs/*
+*.dat
