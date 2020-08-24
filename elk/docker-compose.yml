@@ -31,32 +31,32 @@ services:
     networks:
       - docker-network
 
-  # elasticsearch_node:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
-  #   container_name: elasticsearch_node
-  #   hostname: elasticsearch_node
-  #   environment:
-  #     - cluster.name=docker-cluster
-  #     - bootstrap.memory_lock=true
-  #     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-  #   ulimits:
-  #     memlock:
-  #       soft: -1
-  #       hard: -1
-  #     nofile:
-  #       soft: 65536
-  #       hard: 65536
-  #   # mem_limit: 1g
-  #   cap_add:
-  #     - IPC_LOCK
-  #   ports: 
-  #     - "9201:9200"
-  #     - "9301:9300"
-  #   volumes: # Directory mount 目录挂载
-  #     - ../data/esdata2:/usr/share/elasticsearch/data
-  #     - ./config/elasticsearch_node.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-  #   networks:
-  #     - docker-network
+  elasticsearch_node:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.1
+    container_name: elasticsearch_node
+    hostname: elasticsearch_node
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    # mem_limit: 1g
+    cap_add:
+      - IPC_LOCK
+    ports: 
+      - "9201:9200"
+      - "9301:9300"
+    volumes: # Directory mount 目录挂载
+      - ../data/esdata2:/usr/share/elasticsearch/data
+      - ./config/elasticsearch_node.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - docker-network
 
   kibana:
     image: docker.elastic.co/kibana/kibana:5.5.1
@@ -72,22 +72,22 @@ services:
     networks:
       - docker-network
 
-  # logstash:
-  #   image: docker.elastic.co/logstash/logstash:5.5.1
-  #   container_name: logstash551
-  #   hostname: logstash
-  #   command: logstash -f /etc/logstash/conf.d/logstash.conf
-  #   volumes:
-  #     - ../logstash/conf.d:/etc/logstash/conf.d
-  #     - ../data/weblogs:/weblogs
-  #   restart: always
-  #   depends_on:
-  #     - elasticsearch
-  #   ports:
-  #     - "7001-7005:7001-7005"
-  #     - "4567:4567"
-  #   networks:
-  #     - docker-network
+  logstash:
+    image: docker.elastic.co/logstash/logstash:5.5.1
+    container_name: logstash551
+    hostname: logstash
+    command: logstash -f /etc/logstash/conf.d/
+    volumes:
+      - ../logstash/conf.d:/etc/logstash/conf.d
+      - ../data/weblogs:/weblogs
+    restart: always
+    depends_on:
+      - elasticsearch
+    ports:
+      - "7001-7005:7001-7005"
+      - "4567:4567"
+    networks:
+      - docker-network
 
 
 networks:
