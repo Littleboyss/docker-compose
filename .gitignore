@@ -16,3 +16,4 @@ data/esdata2/*
 data/weblogs/*
 *.dat
 php7.2.tar
+mysql.tar
